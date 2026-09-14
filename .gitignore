@@ -1,0 +1,21 @@
+# Local browser and audit artifacts
+edge-shot-*/
+audit-*/
+audit-*.png
+*-contact.png
+portfolio-*.png
+project-detail-check.png
+zeta-candidates.png
+patch.diff
+coffee-live.png
+
+# Local agent tooling
+.agents/
+tools/
+uiux-design-system.json/
+skills-lock.json
+AGENTS.md
+
+# Temporary OS files
+.DS_Store
+Thumbs.db
