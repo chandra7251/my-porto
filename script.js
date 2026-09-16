@@ -42,7 +42,7 @@ const moveCarousel = (direction) => {
   if (!currentCards.length) return;
   const currentIndex = Math.max(0, currentCards.indexOf(nearestCard()));
   const nextIndex = (currentIndex + direction + currentCards.length) % currentCards.length;
-  currentCards[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+  carousel.scrollTo({ left: currentCards[nextIndex].offsetLeft, behavior: 'smooth' });
 };
 
 document.querySelector('.carousel-prev')?.addEventListener('click', () => moveCarousel(-1));
@@ -77,6 +77,8 @@ document.addEventListener('visibilitychange', () => { paused = document.hidden; 
 
 if (carousel && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   window.setInterval(() => {
-    if (!paused && activeFilter === 'all') moveCarousel(1);
+    const bounds = carousel.getBoundingClientRect();
+    const carouselVisible = bounds.top < window.innerHeight && bounds.bottom > 0;
+    if (!paused && carouselVisible && activeFilter === 'all') moveCarousel(1);
   }, 6500);
 }

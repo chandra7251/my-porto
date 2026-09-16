@@ -10,4 +10,8 @@ for page in PAGES:
     assert 'calm-' not in source, f"{page.name} still contains legacy styling classes"
 
 assert not (ROOT / "style.css").exists(), "legacy stylesheet must be removed"
+
+script = (ROOT / "script.js").read_text(encoding="utf-8")
+assert "scrollIntoView" not in script, "carousel must not scroll the document"
+assert "carousel.scrollTo" in script, "carousel must move within its own scroll container"
 print("portfolio structure: ok")
