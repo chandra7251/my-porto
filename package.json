@@ -1,0 +1,13 @@
+{
+  "name": "chandra-portfolio",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./src/tailwind.css -o ./assets/app.css --minify",
+    "watch": "tailwindcss -i ./src/tailwind.css -o ./assets/app.css --watch",
+    "test": "python tests/portfolio_structure_test.py"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

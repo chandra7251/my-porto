@@ -19,3 +19,6 @@ AGENTS.md
 # Temporary OS files
 .DS_Store
 Thumbs.db
+
+# Node build tooling
+node_modules/
