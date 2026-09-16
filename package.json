@@ -2,7 +2,7 @@
   "name": "chandra-portfolio",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/tailwind.css -o ./assets/app.css --minify",
+    "build": "node ./scripts/build.mjs && tailwindcss -i ./src/tailwind.css -o ./public/assets/app.css --minify",
     "watch": "tailwindcss -i ./src/tailwind.css -o ./assets/app.css --watch",
     "test": "python tests/portfolio_structure_test.py"
   },

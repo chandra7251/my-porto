@@ -22,3 +22,4 @@ Thumbs.db
 
 # Node build tooling
 node_modules/
+public/
