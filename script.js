@@ -1,18 +1,26 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#main-nav');
+const menuLabel = document.querySelector('.menu-label');
+const menuIcon = document.querySelector('.menu-icon');
+
+const setMenuState = (open) => {
+  if (!menuToggle || !navigation) return;
+  navigation.classList.toggle('hidden', !open);
+  navigation.classList.toggle('flex', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+  if (menuLabel) menuLabel.textContent = open ? 'Close' : 'Menu';
+  if (menuIcon) menuIcon.innerHTML = open
+    ? '<path d="m6 6 12 12M18 6 6 18"/>'
+    : '<path d="M4 7h16M4 12h16M4 17h16"/>';
+};
 
 const closeMenu = () => {
-  if (!menuToggle || !navigation) return;
-  navigation.classList.add('hidden');
-  navigation.classList.remove('flex');
-  menuToggle.setAttribute('aria-expanded', 'false');
+  setMenuState(false);
 };
 
 menuToggle?.addEventListener('click', () => {
   const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-  navigation?.classList.toggle('hidden', expanded);
-  navigation?.classList.toggle('flex', !expanded);
-  menuToggle.setAttribute('aria-expanded', String(!expanded));
+  setMenuState(!expanded);
 });
 
 document.querySelectorAll('#main-nav a').forEach((link) => link.addEventListener('click', closeMenu));

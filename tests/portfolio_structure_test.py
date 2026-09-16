@@ -14,4 +14,8 @@ assert not (ROOT / "style.css").exists(), "legacy stylesheet must be removed"
 script = (ROOT / "script.js").read_text(encoding="utf-8")
 assert "scrollIntoView" not in script, "carousel must not scroll the document"
 assert "carousel.scrollTo" in script, "carousel must move within its own scroll container"
+
+home = (ROOT / "index.html").read_text(encoding="utf-8")
+assert "menu-label" in home and "menu-icon" in home, "mobile menu needs clear state cues"
+assert "Download CV" in home and "border-slate-300" in home, "CV download needs button affordance"
 print("portfolio structure: ok")
