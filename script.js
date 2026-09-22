@@ -32,13 +32,26 @@ if (window.location.protocol.startsWith('http')) {
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', currentUrl);
 }
 
-const carousel = document.querySelector('.project-carousel');
+const carousel = document.querySelector('#featured-projects');
+const otherProjects = document.querySelector('#other-projects');
+const projects = window.PORTFOLIO_PROJECTS || [];
 const cards = carousel ? [...carousel.querySelectorAll('.project-card')] : [];
+
+if (carousel && otherProjects && projects.length) {
+  const cardsById = new Map(cards.map((card) => [new URL(card.href).searchParams.get('project'), card]));
+  projects.forEach((project) => {
+    const card = cardsById.get(project.id);
+    if (!card) return;
+    card.dataset.kind = project.kind.join(' ');
+    card.innerHTML = `<div class="flex justify-between text-xs tracking-[0.12em] text-slate-500 uppercase"><span>${project.number}</span><span>${project.category}</span></div><h3 class="mt-16 font-display text-3xl font-semibold tracking-tight">${project.title}</h3><p class="mt-4 min-h-20 text-sm leading-6 text-slate-600">${project.summary}</p><p class="mt-8 border-t border-slate-200 pt-4 text-xs font-semibold text-slate-800">${project.stack.slice(0, 3).join(' · ')}</p>`;
+    (project.featured ? carousel : otherProjects).append(card);
+  });
+}
 const filters = [...document.querySelectorAll('.project-filter')];
 let activeFilter = 'all';
 let paused = false;
 
-const visibleCards = () => cards.filter((card) => !card.hidden);
+const visibleCards = () => cards.filter((card) => !card.hidden && carousel?.contains(card));
 const nearestCard = () => visibleCards().reduce((closest, card) => {
   const distance = Math.abs(card.getBoundingClientRect().left - carousel.getBoundingClientRect().left);
   return distance < closest.distance ? { card, distance } : closest;

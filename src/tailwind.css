@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @source "../*.html";
 @source "../script.js";
+@source "../projects.js";
+@source "../project-detail.js";
 
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
