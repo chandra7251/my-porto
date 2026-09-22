@@ -13,7 +13,7 @@ window.PORTFOLIO_PROJECTS = Object.freeze([
     role: "Fullstack development", stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Supabase"],
     problem: "Local cafe information is scattered and hard to compare before visiting.", solution: "Built a searchable directory with authentication, reviews, bookmarks, maps, API routes, and an admin dashboard.",
     highlights: ["Next.js and TypeScript", "PostgreSQL with Prisma", "Search and filtering", "Reviews and bookmarks", "Map integration", "Admin dashboard"],
-    github: "https://github.com/chandra7251/coffe_karawang", demo: "https://kopikarawang.vercel.app", note: "Public fullstack directory project."
+    github: "https://github.com/chandra7251/coffe_karawang", demo: "https://kopikarawang.my.id", note: "Public fullstack directory project."
   },
   {
     id: "casher-and-owner", featured: true, number: "03", kind: ["web"], category: "POS · Web application", title: "Cashier & Owner",
