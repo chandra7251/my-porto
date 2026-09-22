@@ -35,7 +35,7 @@ if (window.location.protocol.startsWith('http')) {
 const carousel = document.querySelector('#featured-projects');
 const otherProjects = document.querySelector('#other-projects');
 const projects = window.PORTFOLIO_PROJECTS || [];
-const cards = carousel ? [...carousel.querySelectorAll('.project-card')] : [];
+let cards = carousel ? [...carousel.querySelectorAll('.project-card')] : [];
 
 if (carousel && otherProjects && projects.length) {
   const cardsById = new Map(cards.map((card) => [new URL(card.href).searchParams.get('project'), card]));
@@ -46,23 +46,22 @@ if (carousel && otherProjects && projects.length) {
     card.innerHTML = `<div class="flex justify-between text-xs tracking-[0.12em] text-slate-500 uppercase"><span>${project.number}</span><span>${project.category}</span></div><h3 class="mt-16 font-display text-3xl font-semibold tracking-tight">${project.title}</h3><p class="mt-4 min-h-20 text-sm leading-6 text-slate-600">${project.summary}</p><p class="mt-8 border-t border-slate-200 pt-4 text-xs font-semibold text-slate-800">${project.stack.slice(0, 3).join(' · ')}</p>`;
     (project.featured ? carousel : otherProjects).append(card);
   });
+  cards = [...carousel.querySelectorAll('.project-card')];
 }
 const filters = [...document.querySelectorAll('.project-filter')];
 let activeFilter = 'all';
 let paused = false;
+let carouselIndex = 0;
 
 const visibleCards = () => cards.filter((card) => !card.hidden && carousel?.contains(card));
-const nearestCard = () => visibleCards().reduce((closest, card) => {
-  const distance = Math.abs(card.getBoundingClientRect().left - carousel.getBoundingClientRect().left);
-  return distance < closest.distance ? { card, distance } : closest;
-}, { card: visibleCards()[0], distance: Number.POSITIVE_INFINITY }).card;
 
 const moveCarousel = (direction) => {
   if (!carousel) return;
   const currentCards = visibleCards();
   if (!currentCards.length) return;
-  const currentIndex = Math.max(0, currentCards.indexOf(nearestCard()));
-  const nextIndex = (currentIndex + direction + currentCards.length) % currentCards.length;
+  carouselIndex = Math.min(carouselIndex, currentCards.length - 1);
+  const nextIndex = (carouselIndex + direction + currentCards.length) % currentCards.length;
+  carouselIndex = nextIndex;
   carousel.scrollTo({ left: currentCards[nextIndex].offsetLeft, behavior: 'smooth' });
 };
 
@@ -71,6 +70,7 @@ document.querySelector('.carousel-next')?.addEventListener('click', () => moveCa
 
 const applyFilter = (filter) => {
   activeFilter = filter;
+  carouselIndex = 0;
   filters.forEach((button) => {
     const selected = button.dataset.filter === filter;
     button.setAttribute('aria-pressed', String(selected));

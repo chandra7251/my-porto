@@ -39,4 +39,7 @@ assert "My Role" in detail_script, "detail renderer must expose project role"
 assert 'application/ld+json' in home and '"@type":"Person"' in home, "home page needs Person structured data"
 assert "Open GitHub repository" in detail_script, "detail links need descriptive labels"
 assert "prefers-reduced-motion" in script, "motion must respect user preference"
+assert "cards = [...carousel.querySelectorAll('.project-card')]" in script, "carousel controls must use card order after project reordering"
+assert "let carouselIndex = 0" in script, "carousel controls need persistent position for repeated clicks"
+assert "carouselIndex = nextIndex" in script, "carousel controls must advance stored position before smooth scroll finishes"
 print("portfolio structure: ok")
